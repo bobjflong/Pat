@@ -31,9 +31,3 @@ class Array
     end)
   end
 end
-
-[1,2,3].pat('y@x:xs') do |vals|
-  puts vals[:x].to_s
-  puts vals[:xs].to_s
-  puts vals[:y].to_s
-end
