@@ -9,18 +9,26 @@ class Pattern < Whittle::Parser
   rule(:full) do |r|
     
     r[:name, "@", :full].as { |a, _, rest| {
-        a => Proc.new { |list, pointer| [pointer, list] }
+        a => Proc.new { |list, pointer|
+          { pointer: pointer, result: list}
+        }
       }.merge(rest)
     }
 
     r[:name, ":", :name].as { |a, _, b| { 
-        a => Proc.new { |list, pointer| [pointer+1, list[pointer + 1]] },
-        b => Proc.new { |list, pointer| [pointer+1, list[pointer + 1..-1]] }
+        a => Proc.new { |list, pointer| 
+          { pointer: pointer+1, result: list[pointer + 1] }
+        },
+        b => Proc.new { |list, pointer| 
+          {pointer: pointer + 1, result: list[pointer + 1..-1] }
+        }
       }
     }
 
     r[:name, ":", :full].as { |a, _, rest| {
-        a => Proc.new { |list, pointer| [pointer+1, list[pointer + 1]] }
+        a => Proc.new { |list, pointer|
+          { pointer: pointer+1, result: list[pointer + 1] }
+        }
       }.merge(rest)
     }
   end
@@ -34,8 +42,8 @@ class Array
     pointer = -1
     block.call(ans.merge(ans) do |key, val|
       res = val.call(self, pointer)
-      pointer = res[0]
-      res[1]
+      pointer = res[:pointer]
+      res[:result]
     end)
   end
 end
