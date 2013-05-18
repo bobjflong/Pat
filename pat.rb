@@ -1,4 +1,4 @@
- require 'whittle'
+require 'whittle'
 
 class Pattern < Whittle::Parser
   rule(":")
@@ -14,9 +14,14 @@ class Pattern < Whittle::Parser
     }
 
     r[:name, ":", :name].as { |a, _, b| { 
-        a => Proc.new { |list| list[0]},
-        b => Proc.new { |list| list[1..-1]}
+        a => Proc.new { |list, pointer| list[pointer]},
+        b => Proc.new { |list, pointer| list[pointer..-1]}
       }
+    }
+
+    r[:name, ":", :full].as { |a, _, rest| {
+        a => Proc.new { |list, pointer| list[pointer]}
+      }.merge(rest)
     }
   end
 
@@ -26,8 +31,10 @@ end
 class Array
   define_method('pat') do |pattern, &block|
     ans = (Pattern.new).parse(pattern)
+    pointer = -1
     block.call(ans.merge(ans) do |key, val|
-      val.call(self)
+      pointer += 1
+      val.call(self, pointer)
     end)
   end
 end
