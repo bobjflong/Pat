@@ -34,9 +34,9 @@ module Pat
   end
 
   class ::Array
-    define_method('pat') do |pattern, &block|
+    def pat(pattern)
       parsed_grammar = Pat::Cache.lookup(pattern) { (Grammar.new).parse(pattern) }
-      block.call(MatchFetcher.from_list(self, parsed_grammar))
+      yield (MatchFetcher.from_list(self, parsed_grammar))
     end
   end
 
