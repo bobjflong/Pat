@@ -9,6 +9,13 @@ module Pat
         yield (MatchFetcher.from_list(self, parsed_grammar))
       end
     end
+    refine ::Ribimaybe::Maybe::Just do
+      def run(*values)
+        values.map do |value|
+          value.map { |v| @value = @value.curry.(v) }
+        end.last
+      end
+    end
   end
 
   class MatchFetcher
@@ -31,14 +38,6 @@ module Pat
 
     def method_missing(ident)
       @values.fetch(ident, Nothing)
-    end
-  end
-
-  class ::Ribimaybe::Maybe::Just
-    def run(*values)
-      values.map do |value|
-        value.map { |v| @value = @value.curry.(v) }
-      end.last
     end
   end
 
