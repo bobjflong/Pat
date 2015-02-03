@@ -2,7 +2,7 @@ require 'ribimaybe'
 require 'pat'
 
 context '#pat' do
-  
+
   include Ribimaybe::Maybe
 
   it 'should work' do
@@ -28,5 +28,14 @@ context '#pat' do
       end.run(v.x, v.y)
     end
     expect(ans).to eq Nothing
+  end
+
+  context 'whole list matchers' do
+    it 'should work' do
+      ans = [1,2,3].pat('x@y:z') do |v|
+        [v.x,v.y,v.z]
+      end
+      expect(ans).to eq [pure([1,2,3]), pure(1), pure([2,3])]
+    end
   end
 end
