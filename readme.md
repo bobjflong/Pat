@@ -14,7 +14,12 @@ Example: safely add the head of a list to the second item in the list
 end
 
 # => Just(3)
+```
 
+If the list is unsuitable, the whole operation fails gracefully without manual error handling:
+
+
+```ruby
 [1].pat('x:y:_') do |v|
   Just do |x,y|
     x + y
