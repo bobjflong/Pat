@@ -21,6 +21,8 @@ module Pat
   class MatchFetcher
     include Ribimaybe::Maybe
 
+    # Produce a match fetcher given a list to match against,
+    # and a hash containing pointers to ListMatcher classes.
     def self.from_list(ary, ans)
       pointer = -1
       MatchFetcher.new(

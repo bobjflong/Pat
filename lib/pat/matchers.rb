@@ -17,7 +17,7 @@ module Pat
       return Nothing if is_blank?(x)
       Maybe(x)
     end
-    
+
     def is_blank?(x)
       x.nil? || (x.is_a?(Array) && x.empty?)
     end
