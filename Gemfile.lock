@@ -1,9 +1,44 @@
-GEM
+PATH
+  remote: .
   specs:
+    pat (0.0.1)
+      rake
+      ribimaybe
+      whittle
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    contracts (0.5)
+    diff-lcs (1.2.5)
+    fuubar (2.0.0)
+      rspec (~> 3.0)
+      ruby-progressbar (~> 1.4)
+    rake (10.4.2)
+    readygo (0.0.0)
+    ribimaybe (0.0.11)
+      contracts (~> 0.4)
+    rspec (3.2.0)
+      rspec-core (~> 3.2.0)
+      rspec-expectations (~> 3.2.0)
+      rspec-mocks (~> 3.2.0)
+    rspec-core (3.2.0)
+      rspec-support (~> 3.2.0)
+    rspec-expectations (3.2.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-mocks (3.2.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-support (3.2.0)
+    ruby-progressbar (1.7.1)
     whittle (0.0.8)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  whittle
+  fuubar
+  pat!
+  readygo
+  rspec (>= 2.0.0)

@@ -42,6 +42,8 @@ module Pat
 
   class Grammar < Whittle::Parser
 
+    class NonUniqueVariables < StandardError; end
+
     extend ::Ribimaybe::Maybe
 
     rule(":")
@@ -52,6 +54,7 @@ module Pat
     rule(:full) do |r|
 
       r[:name, "@", :full].as do |a, _, rest|
+        check_for_dupes!(a, rest)
         {
           a => ->(*args) do
             Pat::WholeListMatcher.new(*args)
@@ -60,6 +63,7 @@ module Pat
       end
 
       r[:name, ":", :name].as do |a, _, b|
+        check_for_dupes!(a, b)
         {
           a => ->(list, pointer) do
             Pat::NodeMatcher.new(list, pointer + 1)
@@ -71,6 +75,7 @@ module Pat
       end
 
       r[:name, ":", :full].as do |a, _, rest|
+        check_for_dupes!(a, rest)
         {
           a => ->(list, pointer) do
             Pat::NodeMatcher.new(list, pointer + 1)
@@ -80,5 +85,16 @@ module Pat
     end
 
     start(:full)
+
+    private
+
+    def self.check_for_dupes!(x, y)
+      if y.is_a?(Hash)
+        raise NonUniqueVariables if y.include?(x)
+      else
+        raise NonUniqueVariables if x == y
+      end
+    end
+    private_class_method :check_for_dupes!
   end
 end

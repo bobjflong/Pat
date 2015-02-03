@@ -17,6 +17,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency('whittle')
   gem.add_dependency('ribimaybe')
   gem.add_development_dependency('rspec', [">= 2.0.0"])
+  gem.add_development_dependency('fuubar')
+  gem.add_development_dependency('readygo')
 
   # ensure the gem is built out of versioned files
   gem.files = Dir['Rakefile', 'lib/**/*', 'README*', 'LICENSE*'] & `git ls-files -z`.split("\0")
