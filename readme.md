@@ -1,12 +1,25 @@
 Pat
 ---
 
+Pat is a tool for safe array operations in Ruby. Basically it is pattern matching + applicative
+functors (which are provided by the Ribimaybe gem).
+
+Example: safely add the head of a list to the second item in the list
+
 ```ruby
-[1,2,3,4,5].pat('full@x:y:z:xs') do |vals|
-  puts vals[:x].to_s
-  puts vals[:y].to_s
-  puts vals[:z].to_s
-  puts vals[:xs].to_s
-  puts vals[:full].to_s
+[1,2,3].pat('x:y:_') do |v|
+  Just do |x,y|
+    x + y
+  end.run(v.x, v.y)
 end
+
+# => Just(3)
+
+[1].pat('x:y:_') do |v|
+  Just do |x,y|
+    x + y
+  end.run(v.x, v.y)
+end
+
+# => Nothing
 ```
