@@ -14,8 +14,12 @@ module Pat
     private
 
     def maybe(x)
-      return Nothing if x.nil? || (x.is_a?(Array) && x.empty?)
+      return Nothing if is_blank?(x)
       Maybe(x)
+    end
+    
+    def is_blank?(x)
+      x.nil? || (x.is_a?(Array) && x.empty?)
     end
   end
 
