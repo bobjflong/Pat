@@ -38,4 +38,15 @@ context '#pat' do
       expect(ans).to eq [pure([1,2,3]), pure(1), pure([2,3])]
     end
   end
+
+  context 'faily things' do
+    it 'should treat empty slices as Nothing' do
+      ans = [1,2].pat('x:y:z') do |v|
+        Just do |z|
+          z.size
+        end.run(v.z)
+      end
+      expect(ans).to eq Nothing
+    end
+  end
 end
