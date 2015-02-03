@@ -1,8 +1,9 @@
 require 'ribimaybe'
 require 'pat'
 
-context '#pat' do
+using Pat::Extensions
 
+context '#pat' do
   include Ribimaybe::Maybe
 
   it 'should work' do

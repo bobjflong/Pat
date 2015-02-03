@@ -7,6 +7,9 @@ functors (which are provided by the Ribimaybe gem).
 Example: safely add the head of a list to the second item in the list
 
 ```ruby
+
+using Pat::Extensions
+
 [1,2,3].pat('x:y:_') do |v|
   Just do |x,y|
     x + y

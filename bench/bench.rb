@@ -1,6 +1,8 @@
 require 'benchmark'
 require_relative '../lib/pat'
 
+using Pat::Extensions
+
 vars = []
 100.times do
   vars << [*('a'..'z')].sample(5).join

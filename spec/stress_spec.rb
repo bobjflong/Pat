@@ -2,6 +2,8 @@ require 'ribimaybe'
 require 'pat'
 require 'pry'
 
+using Pat::Extensions
+
 context '#pat' do
 
   include Ribimaybe::Maybe

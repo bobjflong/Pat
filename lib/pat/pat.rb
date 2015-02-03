@@ -2,6 +2,15 @@ require 'whittle'
 require 'ribimaybe'
 
 module Pat
+  module Extensions
+    refine ::Array do
+      def pat(pattern)
+        parsed_grammar = Pat::Cache.lookup(pattern) { (Grammar.new).parse(pattern) }
+        yield (MatchFetcher.from_list(self, parsed_grammar))
+      end
+    end
+  end
+
   class MatchFetcher
     include Ribimaybe::Maybe
 
@@ -30,13 +39,6 @@ module Pat
       values.map do |value|
         value.map { |v| @value = @value.curry.(v) }
       end.last
-    end
-  end
-
-  class ::Array
-    def pat(pattern)
-      parsed_grammar = Pat::Cache.lookup(pattern) { (Grammar.new).parse(pattern) }
-      yield (MatchFetcher.from_list(self, parsed_grammar))
     end
   end
 
